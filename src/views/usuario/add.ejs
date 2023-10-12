@@ -1,0 +1,67 @@
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-dark">
+      <span class="h5">Agregar <%= title %></span>
+    </h6>
+  </div>
+  <div class="card-body">
+    <div class="card bg-transparent border card-body">
+
+      <form action="/usuarios/guardar" method="POST">
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre</label>
+          <input id="name" name="nombre" type="text" class="form-control" placeholder="Ingrese un nombre" />
+        </div>
+        <div class="mb-3">
+          <label for="apellido" class="form-label">Apellido</label>
+          <input id="apellido" name="apellido" type="text" class="form-control"
+            placeholder="Ingrese el apellido completo" />
+        </div>
+        <div class="mb-3">
+          <label for="user" class="form-label">Nombre de Usuario</label>
+          <input id="user" name="user" type="text" class="form-control" placeholder="Ingresar el usuario" />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input id="password" name="password" type="password" class="form-control"
+            placeholder="Ingresar la contraseña" />
+        </div>
+        <div class="mb-3">
+          <label for="rol" class="form-label">Seleccionar un rol</label>
+          <select class="form-select" id="rol" aria-label="Default select example" name="idRol">
+            <% for (const rol of roles) { %>
+              <option value="<%= rol.id %>">
+                <%= rol.nombre %>
+              </option>
+              <% }; %>
+          </select>
+        </div>
+
+        <div class="card-footer bg-transparent border-r text-center">
+          <a href="/usuarios/listar" type="button" class="btn btn-danger mr-3">Cancelar</a>
+          <button type="submit" class="btn btn-primary" onclick="guardar()">
+            Guardar
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- Comprovamos que exista alert para poder mostrar la alerta -->
+<script>
+  // Funcion para Mostrar la Alerta de Eliminar:
+  function guardar() {
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Guardado Correctamente',
+      text: 'Datos Correctos!',
+      showConfirmButton: false,
+      timer: 1500
+    }).then(() => {
+      window.location = '/usuarios/listar';
+    });
+  };
+</script>

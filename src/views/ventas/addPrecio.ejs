@@ -1,0 +1,86 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-dark">
+            <span class="h5">Agregar <%= title %></span>
+        </h6>
+    </div>
+    <div class="card-body">
+        <div class="card bg-transparent border card-body">
+
+            <% compra.forEach(function(item) { %>
+                <form class="row g-3 needs-validation" action="/compras/addPrecio/<%= item.producto_id%>" method="POST"
+                    novalidate>
+
+                    <div class="col-4">
+                        <label for="precio_unitario" class="form-label">Precio Unitario</label>
+                        <input type="number" class="form-control" value="<%= item.precio_unitario %>"
+                            id="precio_unitario" disabled>
+                    </div>
+                    <div class="col-4">
+                        <label for="precio" class="form-label">Precio</label>
+                        <input type="number" class="form-control" id="precio" placeholder="0.5">
+                    </div>
+                    <div class="col-2">
+                        <label for="precio_venta" class="form-label">Precio Venta</label>
+                        <input type="number" class="form-control" name="precio_venta" id="precio_venta"
+                            placeholder="<%= item.precio_venta %>">
+                    </div>
+                    <div class=" card-footer bg-transparent border-r text-center">
+                        <a href="/compras/listar" class="btn btn-danger mr-3">Cancelar</a>
+                        <button type="submit" class="btn btn-primary" onclick="guardar()">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+                <% }) %>
+        </div>
+    </div>
+</div>
+
+<!-- Script Para la Validacion -->
+<!-- <script src="<%#=ruta %>js/validacion.js"></script> -->
+<script>
+    // Obtén los elementos del DOM para el Input Precio_Unitario:
+    const precioUnitario = document.getElementById('precio_unitario');
+    const precio = document.getElementById('precio');
+    const precioVenta = document.getElementById('precio_venta');
+
+    // Agrega un evento input al campo de entrada de stock
+    precioUnitario.addEventListener('input', actualizarPrecioUnitario);
+
+    // Agrega un evento input al campo de entrada de total
+    precio.addEventListener('input', actualizarPrecioUnitario);
+
+    function actualizarPrecioUnitario() {
+        // Obtiene los valores de stock y total como números
+        const precio_unitario = parseFloat(precioUnitario.value) || 0;
+        const precioAgregado = parseFloat(precio.value) || 0;
+        console.log(precio_unitario)
+        console.log(precioAgregado)
+
+        // Calcula el precio unitario
+        const precioTotal = (precio_unitario + precioAgregado);
+        console.log(precioTotal)
+
+        // Actualiza el valor del campo de entrada de precio unitario
+        precioVenta.value = isNaN(precioTotal) ? '' : precioTotal.toFixed(2);
+    }
+
+
+    // Modifica la función guardar para que sea asíncrona
+    function guardar() {
+        // Mostrar SweetAlert2
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Guardado Correctamente',
+            text: 'Datos Correctos!',
+            showConfirmButton: false,
+            timer: 1500
+        }).then(() => {
+            // Redirigir después de mostrar la alerta
+            window.location = '/compras/listar';
+        });
+
+    }
+</script>

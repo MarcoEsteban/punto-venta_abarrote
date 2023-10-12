@@ -1,0 +1,141 @@
+<!-- Input para Buscador Producto -->
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="fw-bold h4 text-dark p-2 m-0 ">
+            <i class="fa fa-barcode"></i>
+            <span>Buscar Productos</span>
+        </h6>
+    </div>
+
+    <div class="card-body">
+        <div class="col-md-12 mb-3">
+            <div class="form-group mb-2">
+                <input class="form-control" type="text" placeholder="Ingrese el código o el nombre del producto">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="fw-bold h4 text-dark p-2 m-0 ">
+            <i class="fas fa-list"></i>
+            <span>Listar <%= title %></span>
+        </h6>
+        <div>
+            <button class="btn btn-primary" id="btnIniciarVenta">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Realizar Venta</span>
+            </button>
+            <button class="btn btn-danger" id="btnVaciarListado">
+                <i class="fa-solid fa-trash-can"></i>
+                <span>Vaciar Listado</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead class="bg-info text-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Categoria</th>
+                        <th>Proveedor</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Total</th>
+                        <th>Fecha Vencimiento</th>
+                        <th>Estado</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Termina Datatable -->
+
+<script>
+    // Funcion para Mostrar la Alerta de Eliminar:
+    function habilitar(id) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success m-2',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Estas seguro?',
+            text: '¿Confirma habilitar el registro: ' + id + '?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, habilitar!',
+            cancelButtonText: 'No, cancelar!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                    'Habilitado!',
+                    'El registro con el id: ' + id,
+                    'success'
+                ).then(() => {
+                    window.location = '/compras/habilitar/' + id;
+                })
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelar',
+                    'Habilitar el registro con el id: ' + id,
+                    'error'
+                )
+            }
+        })
+    };
+    function eliminar(id) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success m-2',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Estas seguro?',
+            text: '¿Confirma eliminar el registro: ' + id + '?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, eliminar!',
+            cancelButtonText: 'No, cancelar!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                    'Eliminado!',
+                    'El registro con el id: ' + id,
+                    'success'
+                ).then(() => {
+                    window.location = '/compras/eliminar/' + id;
+                })
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelar',
+                    'Eliminar el registro con el id: ' + id,
+                    'error'
+                )
+            }
+        })
+    };
+</script>

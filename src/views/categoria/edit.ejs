@@ -1,0 +1,44 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-dark">
+            <span class="h5">Modificar <%= title %></span>
+        </h6>
+    </div>
+    <div class="card-body">
+        <div class="col-12 m-auto">
+            <!-- Compruebo que exista el usuario -->
+            <% categoria.forEach(function(categoria) { %>
+                <form class="row g-3" action="/categorias/editar/<%= categoria.id %>" method="POST">
+                    <div class="col-md-12">
+                        <label for="nombre" class="form-label">Nombre <span class="text-warning">(*)</span></label>
+                        <input type="text" class="form-control" id="nombre" value="<%= categoria.nombre %> "
+                            name="nombre" placeholder="Nombre ( requerido )">
+                    </div>
+                    <div class="col-12 text-center">
+                        <a href="/categorias/listar" class="btn btn-danger mr-2">Cancelar</a>
+                        <button class="btn btn-primary" type="submit" onclick="guardar()">Modificar</button>
+                    </div>
+                </form>
+                <% }) %>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Modifica la función guardar para que sea asíncrona
+    function guardar() {
+        // Mostrar SweetAlert2
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Modificado Correctamente',
+            text: 'Datos Correctos!',
+            showConfirmButton: false,
+            timer: 1500
+        }).then(() => {
+            // Redirigir después de mostrar la alerta
+            window.location = '/categorias/listar';
+        });
+    }
+
+</script>

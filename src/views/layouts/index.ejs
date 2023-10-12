@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <%- include("../template/head") %>
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <div id="output"></div>
+
+        <!-- SIDEBAR -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <%- include("../template/sidebar") %>
+        </ul>
+        <!-- Termina SIDEBAR -->
+
+        <!-- Contenedor PRINCIPAL (Header - Main Content) -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Contenedor -->
+            <div id="content">
+                <!-- Header -->
+                <header>
+                    <%- include("../template/header") %>
+                </header>
+                <!-- Termina Header -->
+
+                <!-- Aqui va la Paginas de Cada Menu -->
+                <div class="container-fluid">
+                    <%- body %>
+                </div>
+                <!-- Termina Pagina de Cada Menu -->
+
+            </div>
+            <!-- Termina Contenedor -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Venta Doña Claudia 2023</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- Termina Footer -->
+
+        </div>
+        <!-- Termina Content Main -->
+
+    </div>
+    <!-- Termina Contenedor Principal -->
+
+    <!-- Button Scroll para Arriba -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Termina Button Scroll -->
+
+    <%- include("../template/footer") %>
+
+</body>
+
+</html>

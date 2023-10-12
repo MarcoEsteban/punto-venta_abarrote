@@ -1,0 +1,33 @@
+<!-- Logo -->
+<div>
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/principal">
+    <div class="sidebar-brand-icon">
+      <!-- <i class="fas fa-laugh-wink"></i> -->
+      <i class="fa-solid fa-cart-flatbed"></i>
+    </div>
+    <div class="sidebar-brand-text mx-3"><span class="h4 font-bold">C</span>laudia</div>
+  </a>
+</div>
+<hr class="sidebar-divider my-0">
+<!-- End Logo -->
+
+
+<!-- Menu - Roles -->
+
+<% user.menus.forEach(function(menu, index) { %>
+  <li class="nav-item" id="activo">
+    <a class="nav-link" href="/<%=menu.enlace %>/listar">
+      <i class="<%=menu.icon %>"></i>
+      <span>
+        <%=menu.nombre %>
+      </span>
+    </a>
+  </li>
+  <hr class="sidebar-divider">
+  <% }); %>
+    <!-- End Roles -->
+
+    <!-- Button Toggler - Minimiza el Sidebar -->
+    <div class="text-center d-none d-md-inline">
+      <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>

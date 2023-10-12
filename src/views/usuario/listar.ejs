@@ -1,0 +1,150 @@
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h6 class="fw-bold h4 text-dark p-2 m-0 ">
+            <i class="fas fa-list"></i>
+            <span>Listar <%= title %></span>
+        </h6>
+
+        <a href="/usuarios/add" class="btn btn-info">
+            Agregar <i class="fa-solid fa-plus ml-1 fw-bold fa-lg"></i>
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Nombre Usuario</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% usuarios.forEach(function(user, index) { %>
+                        <tr>
+                            <td>
+                                <%= index+1 %>
+                            </td>
+                            <td>
+                                <%= user.nombre %>
+                            </td>
+                            <td>
+                                <%= user.user %>
+                            </td>
+                            <td>
+                                <%= user.nombreRol %>
+                            </td>
+                            <td class="text-center">
+                                <% if (user.estado===1) { %>
+                                    <div class="btn btn-success btn-sm active">Activo</div>
+                                    <% } else { %>
+                                        <div class="btn btn-danger btn-sm active">Inactivo</div>
+                                        <% } %>
+
+                            </td>
+                            <td class="text-center">
+                                <a href="/usuarios/edit/<%= user.usuario_id %>" class="btn btn-primary">
+                                    <i class="fas fa- fa-pen-to-square"></i>
+                                </a>
+                                <button onclick="eliminar(<%= user.usuario_id %>)" <% if (user.estado===0) { %>
+                                    disabled
+                                    <% } %> class="btn btn-danger">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                                <button onclick="habilitar(<%= user.usuario_id %>)" class="btn btn-warning" <% if
+                                    (user.estado===1) { %>
+                                    disabled
+                                    <% } %>>
+                                        <i class="fa-solid fa-rotate-left"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Termina Datatable -->
+
+<script>
+    // Funcion para Mostrar la Alerta de Eliminar:
+    function habilitar(id) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success m-2',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Estas seguro?',
+            text: '¿Confirma habilitar el registro: ' + id + '?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, habilitar!',
+            cancelButtonText: 'No, cancelar!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                    'Habilitado!',
+                    'El registro con el id: ' + id,
+                    'success'
+                ).then(() => {
+                    window.location = '/usuarios/habilitar/' + id;
+                })
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelar',
+                    'Habilitar el registro con el id: ' + id,
+                    'error'
+                )
+            }
+        })
+    };
+    function eliminar(id) {
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success m-2',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Estas seguro?',
+            text: '¿Confirma eliminar el registro: ' + id + '?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, eliminar!',
+            cancelButtonText: 'No, cancelar!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                swalWithBootstrapButtons.fire(
+                    'Eliminado!',
+                    'El registro con el id: ' + id,
+                    'success'
+                ).then(() => {
+                    window.location = '/usuarios/eliminar/' + id;
+                })
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelar',
+                    'Eliminar el registro con el id: ' + id,
+                    'error'
+                )
+            }
+        })
+    };
+</script>

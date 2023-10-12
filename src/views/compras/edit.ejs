@@ -1,0 +1,117 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-dark">
+            <span class="h5">Modificar <%= title %></span>
+        </h6>
+    </div>
+    <div class="card-body">
+        <div class="col-12 m-auto">
+            <!-- Compruebo que exista el usuario -->
+            <% productos.forEach(function(producto) { %>
+                <form class="row g-3"
+                    action="/compras/editar/<%= producto.id %>/<%= producto.producto_id%>/<%= producto.compra_id%>"
+                    method="POST">
+                    <div>
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" id="nombre" value="<%= producto.nombre%>"
+                            placeholder="Nombre producto">
+                    </div>
+                    <div class="col-6">
+                        <label for="categoria" class="form-label">Seleccionar Categoria </label>
+                        <select class="form-select" id="categoria" aria-label="Default select example"
+                            name="categoria_id">
+                            <% for (const categoria of categorias) { %>
+                                <option value="<%= categoria.id %>" <% if (producto.categoria_id==categoria.id) { %>
+                                    selected <% } %>>
+                                        <%= categoria.nombre %>
+                                </option>
+                                <% }; %>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label for="proveedor" class="form-label">Seleccionar Proveedor </label>
+                        <select class="form-select" id="proveedor" aria-label="Default select" name="proveedor_id">
+                            <% for (const proveedor of proveedores){ %>
+                                <option value="<%= proveedor.id %>" <% if (producto.proveedor_id==proveedor.id) { %>
+                                    selected <% } %>>
+                                        <%= proveedor.nombre %>
+                                </option>
+                                <% }; %>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label for="stock" class="form-label">Cantidad</label>
+                        <input type="number" class="form-control" name="stock" id="stock" value="<%= producto.stock%>"
+                            placeholder=" 8">
+                    </div>
+                    <div class="col-6">
+                        <label for="total" class="form-label">Precio</label>
+                        <input type="number" class="form-control" name="total" id="total" value="<%= producto.total%>"
+                            placeholder="100.00 Bs">
+                    </div>
+                    <div class="col-6">
+                        <label for="precio_unitario" class="form-label">Precio Unitario</label>
+                        <input type="text" class="form-control" name="precio_unitario" id="precio_unitario"
+                            value="<%= producto.precio_unitario%>" placeholder="1.20 bs">
+                    </div>
+                    <div class="col-6">
+                        <label for="fecha_vencimiento" class="form-label">Fecha Vencimiento</label>
+                        <input type="date" class="form-control" name="fecha_vencimiento" id="fecha_vencimiento"
+                            value="<%= producto.fecha_vencimiento%>">
+                    </div>
+
+                    <!-- Buttones -->
+                    <div class=" card-footer bg-transparent border-r text-center">
+                        <a href="/compras/listar" class="btn btn-danger mr-3">Cancelar</a>
+                        <button type="submit" class="btn btn-primary" onclick="guardar()">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+                <% }) %>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Obtén los elementos del DOM para el Input Precio_Unitario:
+    const stockInput = document.getElementById('stock');
+    const totalInput = document.getElementById('total');
+    const precioUnitarioInput = document.getElementById('precio_unitario');
+
+    // Agrega un evento input al campo de entrada de stock
+    stockInput.addEventListener('input', actualizarPrecioUnitario);
+
+    // Agrega un evento input al campo de entrada de total
+    totalInput.addEventListener('input', actualizarPrecioUnitario);
+
+    function actualizarPrecioUnitario() {
+        // Obtiene los valores de stock y total como números
+        const stock = parseFloat(stockInput.value) || 0;
+        const total = parseFloat(totalInput.value) || 0;
+
+        // Calcula el precio unitario
+        const precioUnitario = total / stock;
+
+        // Actualiza el valor del campo de entrada de precio unitario
+        precioUnitarioInput.value = isNaN(precioUnitario) ? '' : precioUnitario.toFixed(2);
+    }
+
+
+    // Modifica la función guardar para que sea asíncrona
+    function guardar() {
+        // Mostrar SweetAlert2
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Modificado Correctamente',
+            text: 'Datos Correctos!',
+            showConfirmButton: false,
+            timer: 1500
+        }).then(() => {
+            // Redirigir después de mostrar la alerta
+            window.location = '/compras/listar';
+        });
+    }
+
+</script>

@@ -1,0 +1,62 @@
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-dark">
+            <span class="h5">Modificar <%= title %></span>
+        </h6>
+    </div>
+    <div class="card-body">
+        <div class="col-12 m-auto">
+            <!-- Compruebo que exista el usuario -->
+            <% proveedor.forEach(function(proveedor) { %>
+                <form class="row g-3" action="/proveedor/editar/<%= proveedor.id %>" method="POST">
+                    <div>
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" id="nombre" value="<%=proveedor.nombre %>"
+                            placeholder="Nombre proveedor">
+                    </div>
+                    <div>
+                        <label for="celular" class="form-label">Celular</label>
+                        <input type="number" class="form-control" name="celular" id="celular"
+                            value="<%=proveedor.celular %>" placeholder="Ejm 77589635">
+                    </div>
+                    <div>
+                        <label for="direccion class=" form-label">Dirección</label>
+                        <textarea class="form-control" name="direccion" id="direccion" placeholder="B./ Avaroa"
+                            rows="2"><%=proveedor.direccion %>
+                        </textarea>
+                    </div>
+                    <div>
+                        <label for="correo" class="form-label">Email</label>
+                        <input type="email" class="form-control" name="correo" id="correo"
+                            value="<%=proveedor.correo %>" placeholder="name@example.com">
+                    </div>
+                    <div class="card-footer bg-transparent border-r text-center">
+                        <a href="/proveedor/listar" class="btn btn-danger mr-3">Cancelar</a>
+                        <button type="submit" class="btn btn-primary" onclick="guardar()">
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+                <% }) %>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Modifica la función guardar para que sea asíncrona
+    function guardar() {
+        // Mostrar SweetAlert2
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Modificado Correctamente',
+            text: 'Datos Correctos!',
+            showConfirmButton: false,
+            timer: 1500
+        }).then(() => {
+            // Redirigir después de mostrar la alerta
+            window.location = '/proveedor/listar';
+        });
+    }
+
+</script>
